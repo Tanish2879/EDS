@@ -70,6 +70,10 @@
   }
 }
 
+
+.default-content-wrapper{
+  background-color: red;
+}
 body {
   display: none;
   margin: 0;

@@ -8,13 +8,22 @@ export default function decorate(block) {
   headerRow.classList.add('countdown-header');
   timerRow.classList.add('countdown-timer');
 
-  // Grab the date string authored in the document (e.g., "December 31, 2026 23:59:00")
+  // Grab the authored date (handles "december 1 , 00 : 22 : 04 : 56" and standard dates)
   const targetDateString = timerRow.textContent.trim();
-  const targetDate = new Date(targetDateString).getTime();
+  const currentYear = new Date().getFullYear();
+  const datePart = targetDateString.split(',')[0].trim();
   
+  let targetDate = new Date(targetDateString).getTime();
+  if (isNaN(targetDate)) {
+    targetDate = new Date(`${datePart} ${currentYear}`).getTime();
+  }
+  if (targetDate < Date.now() && !/\b20\d\d\b/.test(targetDateString)) {
+    targetDate = new Date(`${datePart} ${currentYear + 1}`).getTime();
+  }
+
   // Create a clean element for the timer display
   const timerDisplay = document.createElement('div');
-  timerRow.innerHTML = ''; 
+  timerRow.innerHTML = '';
   timerRow.append(timerDisplay);
 
   // Fallback if the author types an invalid date
@@ -24,14 +33,16 @@ export default function decorate(block) {
     return;
   }
 
+  let interval;
+
   const updateTimer = () => {
     const now = new Date().getTime();
     const distance = targetDate - now;
 
     // Stop at zero
     if (distance <= 0) {
-      timerDisplay.textContent = "00 : 00 : 00 : 00";
-      clearInterval(interval);
+      timerDisplay.textContent = '00 : 00 : 00 : 00';
+      if (interval) clearInterval(interval);
       return;
     }
 
@@ -45,5 +56,5 @@ export default function decorate(block) {
   };
 
   updateTimer(); // Call immediately to prevent a 1-second blank flash
-  const interval = setInterval(updateTimer, 1000);
+  interval = setInterval(updateTimer, 1000);
 }

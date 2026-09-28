@@ -1,0 +1,89 @@
+/* body{
+  margin: 0;
+  padding: 0;
+} */
+
+
+.teaser-wrapper {
+  padding: 0;
+  margin: 0;
+}
+
+.teaser {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 85vh;
+  background-color: #050505;
+  color: #ffffff;
+  overflow: hidden;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  box-sizing: border-box;
+}
+
+/* Background Image */
+.teaser .teaser-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  margin: 0;
+}
+
+.teaser .teaser-bg picture,
+.teaser .teaser-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Content Container overlay */
+.teaser .teaser-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Headline */
+.teaser .teaser-content h1,
+.teaser .teaser-content h2 {
+  font-size: 2.25rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Subheading */
+.teaser .teaser-content p {
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a0a0a0;
+  margin: 0;
+}
+
+/* Button Image */
+.teaser .teaser-content a picture img,
+.teaser .teaser-content a img {
+  margin-top: 1rem;
+  max-width: 220px;
+  height: auto;
+  display: block;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.teaser .teaser-content a:hover img {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}

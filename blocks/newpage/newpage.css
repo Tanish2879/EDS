@@ -1,3 +1,25 @@
 .newpage-wrapper{
-    background-color: aquamarine;
+    background-color: rgba(230, 209, 118, 0.884);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    min-height: 8rem;
+}
+.newpage{
+    width: inherit ;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 3rem;
+}
+
+.inner-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+    padding: 1rem;
+    border-radius: 1rem;
+
 }

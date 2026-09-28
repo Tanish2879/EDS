@@ -1,0 +1,34 @@
+.countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+  padding: 4rem 2rem;
+  font-family: 'Arial', sans-serif; 
+}
+
+.countdown-header {
+  font-size: 3rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  color: #e0e0e0;
+}
+
+.countdown-timer {
+  font-size: 4.5rem;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: #888888;
+}
+
+/* Ensure mobile responsiveness */
+@media (max-width: 768px) {
+  .countdown-timer {
+    font-size: 2.5rem;
+  }
+  .countdown-header {
+    font-size: 1rem;
+  }
+}

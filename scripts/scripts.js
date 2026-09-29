@@ -184,6 +184,7 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
+  await initMagneticScroll();
   loadHeader(doc.querySelector('body > header'));
 
   const main = doc.querySelector('main');
@@ -197,6 +198,7 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+  
 }
 
 /**
@@ -215,3 +217,99 @@ async function loadPage() {
 }
 
 loadPage();
+
+
+import { loadScript } from './aem.js'; // Use './lib-franklin.js' if on older boilerplate
+
+async function initMagneticScroll() {
+  // Only run if there is more than one section
+  const sections = Array.from(document.querySelectorAll('main .section'));
+  if (sections.length < 2) return;
+
+  // Load GSAP and ScrollToPlugin dynamically
+  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js');
+  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js');
+
+  // Register the plugin
+  window.gsap.registerPlugin(window.ScrollToPlugin);
+
+  let currentIndex = 0;
+  let isScrolling = false;
+
+  const scrollToSection = (index) => {
+    if (index < 0 || index >= sections.length || isScrolling) return;
+
+    isScrolling = true;
+    currentIndex = index;
+
+    window.gsap.to(window, {
+      duration: 1.2, // Adjust duration to control scroll speed/weight
+      ease: 'power2.inOut',
+      scrollTo: {
+        y: sections[currentIndex],
+        autoKill: false,
+      },
+      onComplete: () => {
+        // Debounce slightly to prevent trackpad inertia from triggering another jump
+        setTimeout(() => {
+          isScrolling = false;
+        }, 300);
+      },
+    });
+  };
+
+  // Wheel listener for desktop trackpads/mice
+  window.addEventListener(
+    'wheel',
+    (e) => {
+      e.preventDefault(); // Prevent standard erratic browser jump
+      if (isScrolling) return;
+
+      if (e.deltaY > 20) {
+        scrollToSection(currentIndex + 1);
+      } else if (e.deltaY < -20) {
+        scrollToSection(currentIndex - 1);
+      }
+    },
+    { passive: false }
+  );
+
+  // Touch handlers for mobile/tablet swipes
+  let touchStartY = 0;
+  window.addEventListener(
+    'touchstart',
+    (e) => {
+      touchStartY = e.touches[0].clientY;
+    },
+    { passive: true }
+  );
+
+  window.addEventListener(
+    'touchmove',
+    (e) => {
+      if (isScrolling) {
+        e.preventDefault();
+        return;
+      }
+      const touchEndY = e.touches[0].clientY;
+      const diff = touchStartY - touchEndY;
+
+      if (Math.abs(diff) > 40) {
+        e.preventDefault();
+        if (diff > 0) {
+          scrollToSection(currentIndex + 1);
+        } else {
+          scrollToSection(currentIndex - 1);
+        }
+      }
+    },
+    { passive: false }
+  );
+
+  // Keep section height consistent across viewport resizes
+  window.addEventListener('resize', () => {
+    window.gsap.set(window, {
+      scrollTo: { y: sections[currentIndex] },
+    });
+  });
+}

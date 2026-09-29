@@ -1,0 +1,51 @@
+/* Load your custom Figma font here */
+ 
+
+@font-face {
+  font-family: 'YourFigmaFont';
+  src: url('../../fonts/fonnts.com-New_Science_Regular_Extended.otf') format('otf');
+  font-weight: 300; 
+  font-style: normal;
+}
+
+.countdown {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #000000;
+  padding: 5rem 2rem;
+  /* Apply the custom font */
+  font-family: sans-serif; 
+}
+
+.countdown-header {
+  font-size: 3rem;
+  letter-spacing: 0.25em; /* Wide letter spacing from Figma */
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  color: #cccccc;
+  font-weight: 300;
+}
+
+.countdown-timer {
+  font-size: 6rem; /* Much larger to match Figma proportion */
+  font-weight: 200; /* Very thin weight */
+  letter-spacing: 0.15em;
+  color: #555555; /* Darker grey based on the Figma screenshot */
+  line-height: 1;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .countdown-timer {
+    font-size: 3rem;
+  }
+  .countdown-header {
+    font-size: 1rem;
+  }
+}
+
+.countdown-container{
+    height: 100vh;
+}

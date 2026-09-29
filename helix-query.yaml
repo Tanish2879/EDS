@@ -1,0 +1,28 @@
+version: 1
+indices:
+  blog:
+    include:
+      - "/blogs/**"
+    target: "/blogs/query-index.xlsx"
+    properties:
+      path:
+        select: "none"
+        value: "path"
+      title:
+        select: "meta[property='og:title']"
+        value: "attribute:content"
+      description:
+        select: "meta[name='description']"
+        value: "attribute:content"
+      image:
+        select: "meta[property='og:image']"
+        value: "attribute:content"
+      tags:
+        select: "meta[property='article:tag']"
+        value: "attribute:content"
+      publishDate:
+        select: "meta[name='publication-date']"
+        value: "attribute:content"
+      lastModified:
+        select: "none"
+        value: "lastModified"

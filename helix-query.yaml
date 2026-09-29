@@ -23,6 +23,6 @@ indices:
       publishDate:
         select: "meta[name='publication-date']"
         value: "attribute:content"
-      lastModified:
-        select: "none"
-        value: "lastModified"
+      # lastModified:
+      #   select: "none"
+      #   value: "lastModified"

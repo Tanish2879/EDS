@@ -12,9 +12,9 @@ export default function decorate(block) {
   const targetDateString = timerRow.textContent.trim();
   const currentYear = new Date().getFullYear();
   const datePart = targetDateString.split(',')[0].trim();
-  
+
   let targetDate = new Date(targetDateString).getTime();
-  if (isNaN(targetDate)) {
+  if (Number.isNaN(targetDate)) {
     targetDate = new Date(`${datePart} ${currentYear}`).getTime();
   }
   if (targetDate < Date.now() && !/\b20\d\d\b/.test(targetDateString)) {
@@ -27,8 +27,9 @@ export default function decorate(block) {
   timerRow.append(timerDisplay);
 
   // Fallback if the author types an invalid date
-  if (isNaN(targetDate)) {
+  if (Number.isNaN(targetDate)) {
     timerDisplay.textContent = '00 : 00 : 00 : 00';
+    // eslint-disable-next-line no-console
     console.error('Countdown block requires a valid date string in the second row.');
     return;
   }

@@ -10,6 +10,7 @@ import {
   loadSections,
   loadCSS,
   buildBlock,
+  loadScript,
 } from './aem.js';
 
 if (window.trustedTypes && window.trustedTypes.createPolicy) {
@@ -179,48 +180,6 @@ async function loadEager(doc) {
   }
 }
 
-/**
- * Loads everything that doesn't need to be delayed.
- * @param {Element} doc The container element
- */
-async function loadLazy(doc) {
-  await initMagneticScroll();
-  loadHeader(doc.querySelector('body > header'));
-
-  const main = doc.querySelector('main');
-  await loadSections(main);
-
-  const { hash } = window.location;
-  const element = hash ? doc.getElementById(hash.substring(1)) : false;
-  if (hash && element) element.scrollIntoView();
-
-  loadFooter(doc.querySelector('body > footer'));
-
-  loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
-  loadFonts();
-  
-}
-
-/**
- * Loads everything that happens a lot later,
- * without impacting the user experience.
- */
-function loadDelayed() {
-  import('./consent-check.js');
-  // load anything that can be postponed to the latest here
-}
-
-async function loadPage() {
-  await loadEager(document);
-  await loadLazy(document);
-  loadDelayed();
-}
-
-loadPage();
-
-
-import { loadScript } from './aem.js'; // Use './lib-franklin.js' if on older boilerplate
-
 async function initMagneticScroll() {
   // Only run if there is more than one section
   const sections = Array.from(document.querySelectorAll('main .section'));
@@ -271,7 +230,7 @@ async function initMagneticScroll() {
         scrollToSection(currentIndex - 1);
       }
     },
-    { passive: false }
+    { passive: false },
   );
 
   // Touch handlers for mobile/tablet swipes
@@ -281,7 +240,7 @@ async function initMagneticScroll() {
     (e) => {
       touchStartY = e.touches[0].clientY;
     },
-    { passive: true }
+    { passive: true },
   );
 
   window.addEventListener(
@@ -303,7 +262,7 @@ async function initMagneticScroll() {
         }
       }
     },
-    { passive: false }
+    { passive: false },
   );
 
   // Keep section height consistent across viewport resizes
@@ -313,3 +272,41 @@ async function initMagneticScroll() {
     });
   });
 }
+
+/**
+ * Loads everything that doesn't need to be delayed.
+ * @param {Element} doc The container element
+ */
+async function loadLazy(doc) {
+  await initMagneticScroll();
+  loadHeader(doc.querySelector('body > header'));
+
+  const main = doc.querySelector('main');
+  await loadSections(main);
+
+  const { hash } = window.location;
+  const element = hash ? doc.getElementById(hash.substring(1)) : false;
+  if (hash && element) element.scrollIntoView();
+
+  loadFooter(doc.querySelector('body > footer'));
+
+  loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
+  loadFonts();
+}
+
+/**
+ * Loads everything that happens a lot later,
+ * without impacting the user experience.
+ */
+function loadDelayed() {
+  import('./consent-check.js');
+  // load anything that can be postponed to the latest here
+}
+
+async function loadPage() {
+  await loadEager(document);
+  await loadLazy(document);
+  loadDelayed();
+}
+
+loadPage(); // Use './lib-franklin.js' if on older boilerplate

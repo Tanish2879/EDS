@@ -2,8 +2,8 @@ version: 1
 indices:
   blog:
     include:
-      - "/blog/**"
-    target: "/blog/query-index.xlsx"
+      - "/blogs/**"
+    target: "/blogs/query-index.xlsx"
     properties:
       path:
         select: "none"

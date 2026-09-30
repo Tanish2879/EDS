@@ -1,0 +1,42 @@
+[
+  {
+    "id": "hero",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text-area",
+        "name": "text",
+        "label": "Description",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Image",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "page-metadata",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Page Title",
+        "valueType": "string"
+      },
+      {
+        "component": "text-area",
+        "name": "description",
+        "label": "Meta Description",
+        "valueType": "string"
+      }
+    ]
+  }
+]

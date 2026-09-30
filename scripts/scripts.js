@@ -310,3 +310,16 @@ async function loadPage() {
 }
 
 loadPage(); // Use './lib-franklin.js' if on older boilerplate
+
+
+// Check if the page is being loaded within the Universal Editor or authoring preview
+const isEditor = window.location.hostname.includes('adobeaemcloud.com') 
+  || window.location.hostname.includes('aem.page') 
+  || window.location.search.includes('ueditor');
+
+if (isEditor) {
+  import('./editor-support.js').catch((err) => {
+    // eslint-disable-next-line no-console
+    console.warn('Editor support script failed to load:', err);
+  });
+}

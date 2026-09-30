@@ -9,7 +9,7 @@ async function loadUniversalEditor() {
 
 // Handle real-time updates sent from Universal Editor properties rail
 function handleEditorUpdates() {
-  document.addEventListener('aue:ui-select', (e) => {
+  document.addEventListener('aue:ui-select', () => {
     // Optional: hook for when author clicks an element
     // e.detail contains selected component information
   });
@@ -36,6 +36,7 @@ function handleEditorUpdates() {
 }
 
 // Automatically instrument blocks if they lack instrumentation attributes
+// eslint-disable-next-line import/prefer-default-export
 export function initEditorSupport() {
   loadUniversalEditor();
   handleEditorUpdates();

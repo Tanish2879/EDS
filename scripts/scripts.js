@@ -311,10 +311,9 @@ async function loadPage() {
 
 loadPage(); // Use './lib-franklin.js' if on older boilerplate
 
-
 // Check if the page is being loaded within the Universal Editor or authoring preview
-const isEditor = window.location.hostname.includes('adobeaemcloud.com') 
-  || window.location.hostname.includes('aem.page') 
+const isEditor = window.location.hostname.includes('adobeaemcloud.com')
+  || window.location.hostname.includes('aem.page')
   || window.location.search.includes('ueditor');
 
 if (isEditor) {

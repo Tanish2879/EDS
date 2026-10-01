@@ -127,3 +127,5 @@ export default function decorate(block) {
   updateTimer(); // Call immediately to prevent a 1-second blank flash
   interval = setInterval(updateTimer, 1000);
 }
+
+

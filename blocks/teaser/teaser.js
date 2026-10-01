@@ -17,7 +17,7 @@ export default function decorate(block) {
       if (index === 0) row.classList.add('teaser-title');
       if (index === 1) row.classList.add('teaser-subtitle');
       if (index === 2) row.classList.add('teaser-cta');
-      
+
       contentContainer.appendChild(row);
     });
 

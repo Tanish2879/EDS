@@ -1,3 +1,30 @@
+function createUnit(unitName) {
+  const span = document.createElement('span');
+  span.className = `countdown-unit countdown-${unitName}`;
+  span.textContent = '00';
+  return span;
+}
+
+function createSeparator() {
+  const span = document.createElement('span');
+  span.className = 'countdown-separator';
+  span.textContent = ':';
+  return span;
+}
+
+function setUnitValue(el, val) {
+  if (el.textContent !== val) {
+    el.classList.add('is-changing');
+    el.textContent = val;
+    // Force reflow to ensure the initial transform/opacity applies before animating back
+    // eslint-disable-next-line no-unused-expressions
+    el.offsetWidth;
+    requestAnimationFrame(() => {
+      el.classList.remove('is-changing');
+    });
+  }
+}
+
 export default function decorate(block) {
   const rows = [...block.children];
   if (rows.length < 2) return;
@@ -36,13 +63,32 @@ export default function decorate(block) {
   // Create a clean element for the timer display and add the inner class
   const timerDisplay = document.createElement('div');
   timerDisplay.classList.add('countdown-timer-inner');
+  timerDisplay.setAttribute('role', 'timer');
+
+  const daysUnit = createUnit('days');
+  const hoursUnit = createUnit('hours');
+  const minutesUnit = createUnit('minutes');
+  const secondsUnit = createUnit('seconds');
+
+  timerDisplay.append(
+    daysUnit,
+    createSeparator(),
+    hoursUnit,
+    createSeparator(),
+    minutesUnit,
+    createSeparator(),
+    secondsUnit,
+  );
 
   timerRow.innerHTML = '';
   timerRow.append(timerDisplay);
 
   // Fallback if the author types an invalid date
   if (Number.isNaN(targetDate)) {
-    timerDisplay.textContent = '00 : 00 : 00 : 00';
+    setUnitValue(daysUnit, '00');
+    setUnitValue(hoursUnit, '00');
+    setUnitValue(minutesUnit, '00');
+    setUnitValue(secondsUnit, '00');
     // eslint-disable-next-line no-console
     console.error('Countdown block requires a valid date string in the second row.');
     return;
@@ -56,7 +102,10 @@ export default function decorate(block) {
 
     // Stop at zero
     if (distance <= 0) {
-      timerDisplay.textContent = '00 : 00 : 00 : 00';
+      setUnitValue(daysUnit, '00');
+      setUnitValue(hoursUnit, '00');
+      setUnitValue(minutesUnit, '00');
+      setUnitValue(secondsUnit, '00');
       if (interval) clearInterval(interval);
       return;
     }
@@ -64,10 +113,15 @@ export default function decorate(block) {
     // Calculate time units and pad with leading zeros
     const days = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+    const minutes = Math.floor((distance % (1000 * 60)) / (1000 * 60)).toString().padStart(2, '0');
     const seconds = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
 
-    timerDisplay.textContent = `${days} : ${hours} : ${minutes} : ${seconds}`;
+    setUnitValue(daysUnit, days);
+    setUnitValue(hoursUnit, hours);
+    setUnitValue(minutesUnit, minutes);
+    setUnitValue(secondsUnit, seconds);
+
+    timerDisplay.setAttribute('aria-label', `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`);
   };
 
   updateTimer(); // Call immediately to prevent a 1-second blank flash

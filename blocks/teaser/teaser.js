@@ -10,14 +10,31 @@ export default function decorate(block) {
     const contentContainer = document.createElement('div');
     contentContainer.classList.add('teaser-content');
 
-    // Append all rows after Row 1 into contentContainer and assign classes
+    // Define base class names for the specific rows
+    const classNames = ['teaser-title', 'teaser-subtitle', 'teaser-cta'];
+
+    // Append all rows after Row 1 into contentContainer and assign structural classes
     const contentRows = rows.slice(1);
     contentRows.forEach((row, index) => {
-      // Assign specific classes to each row based on its position
-      if (index === 0) row.classList.add('teaser-title');
-      if (index === 1) row.classList.add('teaser-subtitle');
-      if (index === 2) row.classList.add('teaser-cta');
-
+      const baseName = classNames[index];
+      
+      if (baseName) {
+        // 1. Add class to the outer row div
+        row.classList.add(baseName);
+        
+        // 2. Add class to the inner div
+        const innerDiv = row.children[0];
+        if (innerDiv) {
+          innerDiv.classList.add(`${baseName}-inner`);
+          
+          // 3. Add class to the paragraph tag
+          const p = innerDiv.querySelector('p');
+          if (p) {
+            p.classList.add(`${baseName}-text`);
+          }
+        }
+      }
+      
       contentContainer.appendChild(row);
     });
 

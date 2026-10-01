@@ -5,7 +5,19 @@ export default function decorate(block) {
   const headerRow = rows[0];
   const timerRow = rows[1];
 
+  // 1. Assign classes to the Header Row structure
   headerRow.classList.add('countdown-header');
+
+  const headerInner = headerRow.firstElementChild;
+  if (headerInner) {
+    headerInner.classList.add('countdown-header-inner');
+    const headerP = headerInner.querySelector('p');
+    if (headerP) {
+      headerP.classList.add('countdown-header-text');
+    }
+  }
+
+  // 2. Assign classes to the Timer Row wrapper
   timerRow.classList.add('countdown-timer');
 
   // Grab the authored date (handles "december 1 , 00 : 22 : 04 : 56" and standard dates)
@@ -21,8 +33,10 @@ export default function decorate(block) {
     targetDate = new Date(`${datePart} ${currentYear + 1}`).getTime();
   }
 
-  // Create a clean element for the timer display
+  // Create a clean element for the timer display and add the inner class
   const timerDisplay = document.createElement('div');
+  timerDisplay.classList.add('countdown-timer-inner');
+
   timerRow.innerHTML = '';
   timerRow.append(timerDisplay);
 

@@ -20,8 +20,8 @@
   --link-hover-color: #1d3ecf;
 
   /* fonts */
-  --body-font-family:  'YourFigmaFont';
-  --heading-font-family: 'YourFigmaFont';
+  --body-font-family: 'New Science', 'New Science Fallback', sans-serif;
+  --heading-font-family: 'New Science', 'New Science Fallback', sans-serif;
 
   /* body sizes */
   --body-font-size-m: 22px;
@@ -48,7 +48,7 @@
 }
 
 @font-face {
-  font-family: "New Science";
+  font-family: 'New Science Fallback';
   size-adjust: 99.529%;
   src: local('Arial');
 }

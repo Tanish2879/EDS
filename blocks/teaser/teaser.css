@@ -1,41 +1,142 @@
-/* Typography targeting the new JS classes */
-.teaser .teaser-title p {
-  font-size: 4rem;
-  letter-spacing: 0;
-  text-transform: uppercase;
-  color: #fffefe;
+/* Ensure full-bleed section layout in EDS */
+.section.teaser-container {
+  padding: 0;
   margin: 0;
-  font-weight: 300;
+  max-width: none;
 }
 
-.teaser .teaser-subtitle p {
-  font-size: 1.5rem;
+.teaser-wrapper {
+  padding: 0;
+  margin: 0;
+}
+
+.teaser {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  background-color: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Background image */
+.teaser .teaser-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.teaser .teaser-bg > div,
+.teaser .teaser-bg picture,
+.teaser .teaser-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* Foreground content container */
+.teaser .teaser-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+
+  /* max-width: 1200px; */
+  padding: 0 1.5rem 7vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Title: SOMETHING NEW IS COMING */
+.teaser .teaser-title {
+  margin: 0 0 0.75rem;
+}
+
+.teaser .teaser-title-text {
+  font-family: var(--heading-font-family);
+  font-size: clamp(2rem, 4.5vw, 4.2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
   color: #fff;
   margin: 0;
 }
 
-/* New Text CTA Button */
+/* Subtitle: STAY TUNED FOR UPDATES */
+.teaser .teaser-subtitle {
+  margin: 0 0 2rem;
+}
+
+.teaser .teaser-subtitle-text {
+  font-family: var(--body-font-family);
+  font-size: clamp(0.75rem, 1.2vw, 1.2rem);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #dfdfdf;
+  margin: 0;
+}
+
+/* CTA: REGISTER INTEREST + */
 .teaser .teaser-cta {
-  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
 }
 
-.teaser .teaser-cta p {
-  display: inline-block;
-  border: 1px solid #fff;
-  padding: 0.75rem 2.5rem;
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  margin: 0;
-}
-
-.teaser .teaser-cta p:hover {
+.teaser .teaser-cta-text,
+.teaser .teaser-cta-text a,
+.teaser .teaser-cta .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background-color: #fff;
-  color: #050505;
+  color: #000;
+  border: 1px solid #fff;
+  border-radius: 6px;
+  padding: 0.75rem 2rem;
+  font-family: var(--body-font-family);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  margin: 0;
+  transition: background-color 0.25s ease, color 0.25s ease, opacity 0.25s ease;
+}
+
+.teaser .teaser-cta-text:hover,
+.teaser .teaser-cta-text a:hover,
+.teaser .teaser-cta .button:hover {
+  background-color: #e5e5e5;
+  color: #000;
+  text-decoration: none;
+  opacity: 0.95;
+}
+
+@media (width <= 768px) {
+  .teaser .teaser-content {
+    padding-bottom: 5vh;
+  }
+
+  .teaser .teaser-title {
+    margin-bottom: 0.5rem;
+  }
+
+  .teaser .teaser-subtitle {
+    margin-bottom: 1.5rem;
+  }
 }

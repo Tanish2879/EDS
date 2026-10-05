@@ -80,8 +80,22 @@ export default function decorate(block) {
     });
   }
 
+  // Add smooth scroll trigger for the CTA
+  const cta = contentContainer.querySelector('.teaser-cta');
+  if (cta) {
+    cta.addEventListener('click', (e) => {
+      const formBlock = document.getElementById('form-block') || document.querySelector('.form.block');
+      if (formBlock) {
+        e.preventDefault();
+        formBlock.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+  
   // Re-assemble the block
   block.replaceChildren(bgRow, contentContainer);
+
+  
 }
 
 // forcing webhook sync

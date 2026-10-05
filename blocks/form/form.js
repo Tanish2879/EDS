@@ -1,6 +1,5 @@
 export default function decorate(block) {
-
-    block.id = 'form-block';
+  block.id = 'form-block';
   // 1. Identify the two columns from the da.live structure
   const row = block.firstElementChild;
   if (!row || row.children.length < 2) return;
